@@ -4,6 +4,7 @@ const CustomError = require("../errors");
 const { unHash, hashedPassword } = require("../utils/hash");
 const { createTokenUser } = require("../utils/createTokenUser");
 const { cookies } = require("../utils/jwt");
+const { checkPermissions } = require("../utils/checkPermissions");
 
 const { CustomAPIError, UnauthenticatedError, NotFoundError, BadRequestError } =
   CustomError;
@@ -19,6 +20,8 @@ const getSingeUser = async (req, res) => {
   if (!user) {
     throw new NotFoundError(`No user with id ${id}`);
   }
+  
+  checkPermissions(req.user, user);
 
   res.status(StatusCodes.OK).json({ user });
 };
@@ -50,7 +53,10 @@ const updateUser = async (req, res) => {
 
   res
     .status(StatusCodes.OK)
-    .json({ msg: `Update to profile of id: ${userId} was successful`, newUser });
+    .json({
+      msg: `Update to profile of id: ${userId} was successful`,
+      newUser,
+    });
 };
 const updateUserPassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
