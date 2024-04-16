@@ -19,13 +19,13 @@ router.get("/", authenticateUser, authorizePermissions('admin'), getAllUsers);
 
 router.get("/me", authenticateUser, showCurrentUser);
 router.patch(
-  "/updateUser/:id",
+  "/updateUser",
   authenticateUser,
   //   authorizePermissions,
   updateUser
 );
 router.patch(
-  "/updateUserPassword/:id",
+  "/updateUserPassword",
   authenticateUser,
   //   authorizePermissions,
   updateUserPassword
