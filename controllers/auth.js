@@ -25,7 +25,7 @@ const login = async (req, res) => {
     name: checkedName,
     email: checkedUserEmail,
     password: databasePassword,
-    role
+    role,
   } = user;
 
   const isMatch = await unHash(requestPassword, databasePassword);
@@ -34,7 +34,7 @@ const login = async (req, res) => {
   }
 
   const tokenUser = { userId, name: checkedName, role };
-  cookies({res, user: tokenUser})
+  cookies({ res, user: tokenUser });
 
   res.status(StatusCodes.OK).json({
     msg: `user exists with name ${checkedName}`,
@@ -60,7 +60,7 @@ const register = async (req, res) => {
   const { _id: userId, name: regName, email: regEmail, role: regRole } = user;
 
   const tokenUser = { userId, name: regName, role: regRole };
-  cookies({res, user: tokenUser})
+  cookies({ res, user: tokenUser });
 
   res.status(StatusCodes.CREATED).json({
     msg: `user created with name ${name}`,
@@ -69,10 +69,11 @@ const register = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  res.cookie('token', 'logout', {
+  res.cookie("authToken", "logout", {
     httpOnly: true,
-    expires: new DAte(Date.now())
-  })
+    expires: new Date(Date.now() + 1000),
+  });
+  res.status(StatusCodes.OK).json({ msg: "user logged out!" });
 };
 
 module.exports = { login, register, logout };

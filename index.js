@@ -17,6 +17,7 @@ const connectDB = require("./db");
 
 // routers imports
 const authRouter = require('./routes/auth')
+const userRouter = require('./routes/userRoutes')
 
 // middleware
 const notFoundMiddleware = require('./middleware/not-found')
@@ -36,6 +37,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/user', userRouter)
 
 {
   /**MIDDLEWARE */
@@ -48,7 +50,7 @@ app.use(errorHandlerMiddleware);
   /**APP SERVER */
 }
 
-const port = process.env.PORT || 7000;
+const port = process.env.PORT || 8000;
 
 const start = async () => {
   try {
