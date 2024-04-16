@@ -2,6 +2,8 @@ const User = require("../models/user");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const { unHash, hashedPassword } = require("../utils/hash");
+const { createTokenUser } = require("../utils/createTokenUser");
+const { cookies } = require("../utils/jwt");
 
 const { CustomAPIError, UnauthenticatedError, NotFoundError, BadRequestError } =
   CustomError;
@@ -24,7 +26,31 @@ const showCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: req.user });
 };
 const updateUser = async (req, res) => {
-  res.send("update user");
+  const { userId } = req.user;
+  const { newName, newEmail } = req.body;
+
+  if (!newName && !newEmail) {
+    throw new BadRequestError("Please provide newName or newEmail");
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new NotFoundError(`No user with id ${userId}`);
+  }
+
+  const newUser = await User.findByIdAndUpdate(
+    userId,
+    { name: newName, email: newEmail },
+    { new: true, runValidators: true }
+  );
+
+  const tokenUser = createTokenUser(user);
+  cookies({ res, user: tokenUser });
+
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: `Update to profile of id: ${userId} was successful`, newUser });
 };
 const updateUserPassword = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
@@ -57,7 +83,7 @@ const updateUserPassword = async (req, res) => {
   const hashedPass = await hashedPassword(newPassword);
 
   await User.findByIdAndUpdate(userId, { password: hashedPass }, { new: true });
-  
+
   res.status(StatusCodes.OK).json({ msg: "Password Updated" });
 };
 const deleteUser = async (req, res) => {

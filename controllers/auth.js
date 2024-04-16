@@ -3,6 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const { unHash } = require("../utils/hash");
 const { createJWT, verifyJWT, cookies } = require("../utils/jwt");
+const { createTokenUser } = require("../utils/createTokenUser");
 
 const { CustomAPIError, UnauthenticatedError, NotFoundError, BadRequestError } =
   CustomError;
@@ -33,7 +34,8 @@ const login = async (req, res) => {
     throw new UnauthenticatedError("Wrong Password");
   }
 
-  const tokenUser = { userId, name: checkedName, role };
+  // const tokenUser = { userId, name: checkedName, role };
+  const tokenUser = createTokenUser(user);
   cookies({ res, user: tokenUser });
 
   res.status(StatusCodes.OK).json({
@@ -59,7 +61,8 @@ const register = async (req, res) => {
   const user = await User.create({ name, email, password, role });
   const { _id: userId, name: regName, email: regEmail, role: regRole } = user;
 
-  const tokenUser = { userId, name: regName, role: regRole };
+  // const tokenUser = { userId, name: regName, role: regRole };
+  const tokenUser = createTokenUser(user);
   cookies({ res, user: tokenUser });
 
   res.status(StatusCodes.CREATED).json({
