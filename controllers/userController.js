@@ -6,7 +6,6 @@ const { CustomAPIError, UnauthenticatedError, NotFoundError, BadRequestError } =
   CustomError;
 
 const getAllUsers = async (req, res) => {
-  console.log("getAllUsers", req.user);
   const users = await User.find({ role: "user" }).select("-password");
   res.status(StatusCodes.OK).json({ users });
 };
@@ -21,7 +20,7 @@ const getSingeUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user });
 };
 const showCurrentUser = async (req, res) => {
-  res.send("current user");
+  res.status(StatusCodes.OK).json({ user: req.user });
 };
 const updateUser = async (req, res) => {
   res.send("update user");
