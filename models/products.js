@@ -20,7 +20,7 @@ const ProductSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default: "no-photo.jpg",
+      default: "/uploads.example.jpeg",
     },
     category: {
       type: String,
@@ -71,6 +71,7 @@ const ProductSchema = new mongoose.Schema(
     colors: {
       type: [String],
       required: true,
+      default: ["White"],
       enum: {
         values: [
           "Black",

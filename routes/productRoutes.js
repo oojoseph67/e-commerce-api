@@ -40,8 +40,8 @@ router.delete(
   deleteProduct
 );
 
-router.patch(
-  "/updateProductImage/:id",
+router.post(
+  "/updateProductImage",
   authenticateUser,
   authorizePermissions("admin"),
   updateProductImage
