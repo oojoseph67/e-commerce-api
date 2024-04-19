@@ -26,7 +26,10 @@ const getAllProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   const { id: productId } = req.params;
   //   const product = await Product.findOne({ _id: productId });
-  const product = await Product.findById(productId);
+  const product = await Product.findById(productId).populate({
+    path: "reviews",
+    select: "rating comment",
+  });
 
   if (!product) {
     throw new CustomError.NotFoundError(`No product with id : ${productId}`);
@@ -79,8 +82,10 @@ const updateProductImage = async (req, res) => {
 
   const filePath = path.join(__dirname, `../public/uploads/${file.name}`);
   await file.mv(filePath);
-  
-  res.status(StatusCodes.OK).json({ filePath, msg: "Success!!! Image uploaded" });
+
+  res
+    .status(StatusCodes.OK)
+    .json({ filePath, msg: "Success!!! Image uploaded" });
 };
 
 module.exports = {

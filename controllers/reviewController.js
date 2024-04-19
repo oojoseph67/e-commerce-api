@@ -43,7 +43,10 @@ const createReview = async (req, res) => {
 };
 
 const getAllReviews = async (req, res) => {
-  const reviews = await Review.find({});
+  const reviews = await Review.find({}).populate({
+    path: "product",
+    select: "name company price description",
+  });
 
   res.status(StatusCodes.OK).json({ count: reviews.length, reviews });
 };
@@ -55,7 +58,10 @@ const getReviewById = async (req, res) => {
     throw new CustomError.BadRequestError("Please provide a review id");
   }
 
-  const review = await Review.findById(reviewId);
+  const review = await Review.findById(reviewId).populate({
+    path: "product",
+    select: "name company price description",
+  });
 
   if (!review) {
     throw new CustomError.NotFoundError(`No review with id : ${reviewId}`);
@@ -67,22 +73,18 @@ const getReviewById = async (req, res) => {
 const updateReview = async (req, res) => {
   const { id: reviewId } = req.params;
 
+  const review = await Review.findById(reviewId);
+
+  if (!review) {
+    throw new CustomError.NotFoundError(`No review with id : ${reviewId}`);
+  }
+
+  checkPermissions(req.user, review.user);
+
   const updatedReview = await Review.findByIdAndUpdate(reviewId, req.body, {
     new: true,
     runValidators: true,
   });
-
-  if (!updatedReview) {
-    throw new CustomError.NotFoundError(`No review with id : ${reviewId}`);
-  }
-
-  if (req.user.userId !== updatedReview.user.toString()) {
-    throw new CustomError.UnauthorizedError(
-      "Not authorized to update this review"
-    );
-  }
-
-  checkPermissions(req.user, review.user);
 
   res.status(StatusCodes.OK).json({ updatedReview });
 };
