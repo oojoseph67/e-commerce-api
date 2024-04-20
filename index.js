@@ -12,6 +12,12 @@ const app = express();
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
 const fileUpload = require('express-fileupload')
+const cors = require("cors");
+
+// swagger api
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+// const swaggerDocument = YAML.load("./swagger.yaml");
 
 // database
 const connectDB = require("./db");
@@ -30,6 +36,13 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 {
   /**ROUTES */
 }
+// cors
+app.use(
+  cors({
+    origin: "*", // or '*' to allow all origins
+  })
+);
+
 // configs
 app.use(morgan('tiny'))
 app.use(express.json());
@@ -41,6 +54,8 @@ app.use(fileUpload())
 app.get("/", (req, res) => {
   res.send("e-commerce-api");
 });
+
+// app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
