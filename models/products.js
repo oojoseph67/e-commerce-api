@@ -41,7 +41,7 @@ const ProductSchema = new mongoose.Schema(
           "Home",
         ],
         message:
-          "{VALUE is not supported. Please select correct category for product",
+          "{VALUE} is not supported. Please select correct category for product",
       },
     },
     company: {
@@ -65,7 +65,7 @@ const ProductSchema = new mongoose.Schema(
           "Bose",
         ],
         message:
-          "{VALUE is not supported. Please select verified company for product",
+          "{VALUE} is not supported. Please select verified company for product",
       },
     },
     colors: {
@@ -87,7 +87,7 @@ const ProductSchema = new mongoose.Schema(
           "Pink",
         ],
         message:
-          "{VALUE is not supported. Please select available colors for product",
+          "{VALUE} is not supported. Please select available colors for product",
       },
     },
     featured: {
