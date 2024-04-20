@@ -1,5 +1,5 @@
 const Product = require("../models/products");
-const User = require("../models/user");
+const Review = require("../models/reviews");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const path = require("path");
@@ -57,8 +57,9 @@ const deleteProduct = async (req, res) => {
   const { id: productId } = req.params;
 
   const product = await Product.findByIdAndDelete(productId, { active: false });
+  const review = await Review.deleteMany({ product: productId });
 
-  if (!product) {
+  if (!product || !review) {
     throw new CustomError.NotFoundError(`No product with id : ${productId}`);
   }
   res.status(StatusCodes.OK).json({ msg: "Success!!! Product deleted" });

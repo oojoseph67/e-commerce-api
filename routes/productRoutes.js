@@ -15,6 +15,8 @@ const {
   updateProductImage,
 } = require("../controllers/productController");
 
+const { getSingleProductReview } = require("../controllers/reviewController");
+
 router.post(
   "/",
   authenticateUser,
@@ -25,6 +27,8 @@ router.post(
 router.get("/", getAllProducts);
 
 router.get("/:id", getProductById);
+
+router.get("/:id/reviews", authenticateUser, getSingleProductReview);
 
 router.patch(
   "/:id",
