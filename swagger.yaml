@@ -1,0 +1,735 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: ECOMMERCE-API
+  contact:
+    email: oojoseph67@gmail.com
+    name: Joseph
+    url: https://github.com/oojoseph67/
+host: e-commerce-api-f7r1.onrender.com
+basePath: /api/v1
+securityDefinitions: {}
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /user:
+    get:
+      summary: Get All Users
+      tags:
+        - User
+      operationId: GetAllUsers
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /user/{id}:
+    get:
+      summary: Get Single User
+      tags:
+        - User
+      operationId: GetSingleUser
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /:
+    get:
+      summary: Show Current User
+      tags:
+        - User
+      operationId: ShowCurrentUser
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /user/updateUserPassword:
+    patch:
+      summary: Update Password
+      tags:
+        - User
+      operationId: UpdatePassword
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/UpdatePasswordRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /user/updateUser:
+    patch:
+      summary: Update User
+      tags:
+        - User
+      operationId: UpdateUser
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/UpdateUserRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /auth/register:
+    post:
+      summary: Register
+      tags:
+        - Auth
+      operationId: Register
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/RegisterRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+  /auth/login:
+    post:
+      summary: Login
+      tags:
+        - Auth
+      operationId: Login
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/LoginRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+  /auth/logout:
+    get:
+      summary: Logout
+      tags:
+        - Auth
+      operationId: Logout
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /review:
+    post:
+      summary: Create Review
+      tags:
+        - Reviews
+      operationId: CreateReview
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/CreateReviewRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    get:
+      summary: Get All Reviews
+      tags:
+        - Reviews
+      operationId: GetAllReviews
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /review/{id}:
+    get:
+      summary: Get Reviews By Id
+      tags:
+        - Reviews
+      operationId: GetReviewsById
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    patch:
+      summary: New Request
+      tags:
+        - Reviews
+      operationId: NewRequest
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/NewRequestRequest'
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    delete:
+      summary: New Request
+      tags:
+        - Reviews
+      operationId: DeleteNewRequest
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /product:
+    post:
+      summary: Create Producet
+      tags:
+        - Products
+      operationId: CreateProducet
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/CreateProducetRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    get:
+      summary: Get All Product
+      tags:
+        - Products
+      operationId: GetAllProduct
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /product/{id}:
+    get:
+      summary: Get Single Product
+      tags:
+        - Products
+      operationId: GetSingleProduct
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    patch:
+      summary: Update Product
+      tags:
+        - Products
+      operationId: UpdateProduct
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/UpdateProductRequest'
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    delete:
+      summary: Delete Product
+      tags:
+        - Products
+      operationId: DeleteProduct
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /product/updateProductImage:
+    post:
+      summary: Upload Product Image
+      tags:
+        - Products
+      operationId: UploadProductImage
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: image
+          in: formData
+          required: true
+          type: file
+          format: file
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /product/{id}/reviews:
+    get:
+      summary: Get Single Product Review
+      tags:
+        - Products
+      operationId: GetSingleProductReview
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /order/show/me:
+    get:
+      summary: Get Order For Current User
+      tags:
+        - Orders
+      operationId: GetOrderForCurrentUser
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /order:
+    post:
+      summary: Create Order
+      tags:
+        - Orders
+      operationId: CreateOrder
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/CreateOrderRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    get:
+      summary: Get All Order
+      tags:
+        - Orders
+      operationId: GetAllOrder
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /order/{id}:
+    get:
+      summary: Get Order By Id
+      tags:
+        - Orders
+      operationId: GetOrderById
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    patch:
+      summary: Update Order
+      tags:
+        - Orders
+      operationId: UpdateOrder
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    delete:
+      summary: Delete Order
+      tags:
+        - Orders
+      operationId: DeleteOrder
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+definitions:
+  UpdatePasswordRequest:
+    title: UpdatePasswordRequest
+    example:
+      oldPassword: secret
+      newPassword: newSecret
+    type: object
+    properties:
+      oldPassword:
+        type: string
+      newPassword:
+        type: string
+    required:
+      - oldPassword
+      - newPassword
+  UpdateUserRequest:
+    title: UpdateUserRequest
+    example:
+      newName: James
+      newEmail: oojosepae@h.com
+    type: object
+    properties:
+      newName:
+        type: string
+      newEmail:
+        type: string
+    required:
+      - newName
+      - newEmail
+  RegisterRequest:
+    title: RegisterRequest
+    example:
+      name: Joseph
+      email: o3jpro@gmail.com
+      password: secret
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - name
+      - email
+      - password
+  LoginRequest:
+    title: LoginRequest
+    example:
+      name: Joseph
+      email: o3jpro@gmail.com
+      password: secret
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - name
+      - email
+      - password
+  CreateReviewRequest:
+    title: CreateReviewRequest
+    example:
+      product: 662363fadb587d8a9de17e66
+      rating: 4
+      title: worst pc every
+      comment: >-
+        this is the worst macbook every to be created in the fucking world... i
+        love it
+    type: object
+    properties:
+      product:
+        type: string
+      rating:
+        type: integer
+        format: int32
+      title:
+        type: string
+      comment:
+        type: string
+    required:
+      - product
+      - rating
+      - title
+      - comment
+  NewRequestRequest:
+    title: NewRequestRequest
+    example:
+      product: 661f09a17f4b6273cd7579b5
+      rating: 4
+      title: bestest pc every
+      comment: >-
+        this is the best macbook every to be created in the fucking world... i
+        love it
+    type: object
+    properties:
+      product:
+        type: string
+      rating:
+        type: integer
+        format: int32
+      title:
+        type: string
+      comment:
+        type: string
+    required:
+      - product
+      - rating
+      - title
+      - comment
+  CreateProducetRequest:
+    title: CreateProducetRequest
+    example:
+      name: Mac M2 Pro
+      price: '1234'
+      description: Mac M2 Pro
+      category: Laptops
+      company: Apple
+      colors: Black
+      featured: true
+      freeShipping: false
+      inventory: 20
+      averageRating: 5
+    type: object
+    properties:
+      name:
+        type: string
+      price:
+        type: string
+      description:
+        type: string
+      category:
+        type: string
+      company:
+        type: string
+      colors:
+        type: string
+      featured:
+        type: boolean
+      freeShipping:
+        type: boolean
+      inventory:
+        type: integer
+        format: int32
+      averageRating:
+        type: integer
+        format: int32
+    required:
+      - name
+      - price
+      - description
+      - category
+      - company
+      - colors
+      - featured
+      - freeShipping
+      - inventory
+      - averageRating
+  UpdateProductRequest:
+    title: UpdateProductRequest
+    example:
+      name: Mac M2 Pro
+      price: '2000'
+      description: >-
+        Mac M2 Pro 2023 Model. One of the best in the market right now, dont
+        miss out
+    type: object
+    properties:
+      name:
+        type: string
+      price:
+        type: string
+      description:
+        type: string
+    required:
+      - name
+      - price
+      - description
+  CreateOrderRequest:
+    title: CreateOrderRequest
+    example:
+      tax: '88'
+      shippingFee: '345'
+      items:
+        - name: item1
+          price: 200
+          image: item1.jpg
+          amount: 2
+          product: 14885994
+    type: object
+    properties:
+      tax:
+        type: string
+      shippingFee:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/Item'
+    required:
+      - tax
+      - shippingFee
+      - items
+  Item:
+    title: Item
+    example:
+      name: item1
+      price: 200
+      image: item1.jpg
+      amount: 2
+      product: 14885994
+    type: object
+    properties:
+      name:
+        type: string
+      price:
+        type: integer
+        format: int32
+      image:
+        type: string
+      amount:
+        type: integer
+        format: int32
+      product:
+        type: integer
+        format: int32
+    required:
+      - name
+      - price
+      - image
+      - amount
+      - product
+tags:
+  - name: Auth
+  - name: User
+  - name: Products
+  - name: Reviews
+  - name: Orders

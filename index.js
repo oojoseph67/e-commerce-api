@@ -17,7 +17,7 @@ const cors = require("cors");
 // swagger api
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
-// const swaggerDocument = YAML.load("./swagger.yaml");
+const swaggerDocument = YAML.load("./swagger.yaml");
 
 // database
 const connectDB = require("./db");
@@ -52,10 +52,10 @@ app.use(fileUpload())
 
 // route
 app.get("/", (req, res) => {
-  res.send("e-commerce-api");
+  res.send('<h1>E-COMMERCE-API</h1><a href="/api/docs">DOCUMENTATION </a>');
 });
 
-// app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
