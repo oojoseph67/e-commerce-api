@@ -27,7 +27,7 @@ const swaggerDocument = YAML.load("./swagger.yaml");
 const connectDB = require("./db");
 
 // routers imports
-const authRouter = require("./routes/auth");
+const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
 const productRouter = require("./routes/productRoutes");
 const reviewRouter = require("./routes/reviewRoutes");

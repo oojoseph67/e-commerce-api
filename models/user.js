@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const validator = require("validator")
+const validator = require("validator");
 const { hashedPassword } = require("../utils/hash");
 
 const UserSchema = new mongoose.Schema({
@@ -15,8 +15,8 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: validator.isEmail,
-      message: 'please provide a valid email'
-    }
+      message: "please provide a valid email",
+    },
   },
   password: {
     type: String,
@@ -27,6 +27,25 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ["admin", "user"],
     default: "user",
+  },
+  verificationToken: {
+    type: String,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verified: {
+    type: Date,
+    default: null,
+  },
+  passwordToken: {
+    type: String,
+    default: null,
+  },
+  passwordTokenExpires: {
+    type: Date,
+    default: null,
   },
 });
 

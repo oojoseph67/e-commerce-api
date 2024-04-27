@@ -1,16 +1,33 @@
 const CustomError = require("../errors");
-const { verifyJWT } = require("../utils/jwt");
+const { verifyJWT, attachCookiesToResponse } = require("../utils/jwt");
+const { createTokenUser } = require("../utils/createTokenUser");
 
 const authenticateUser = async (req, res, next) => {
-  const token = req.signedCookies.authToken;
+  const { authToken, refreshToken } = req.signedCookies;
 
-  if (!token) {
+  if (!authToken && !refreshToken) {
     throw new CustomError.UnauthenticatedError("Authentication invalid");
   }
 
   try {
-    const { userId, name, role } = verifyJWT(token);
-    req.user = { userId, name, role };
+    if (authToken) {
+      const { userId, name, role } = verifyJWT(authToken);
+      req.user = { userId, name, role };
+      return next();
+    }
+
+    const payload = verifyJWT(refreshToken);
+    const { userId, refreshToken: payloadRefreshToken, user } = payload.user;
+    const existingToken = await Token.findByOne({
+      user: userId,
+      refreshToken: payloadRefreshToken,
+    });
+
+    if (!existingToken || !existingToken.isValid) {
+      throw new CustomError.UnauthenticatedError("Authentication invalid");
+    }
+
+    attachCookiesToResponse({ res, user, refreshToken: payloadRefreshToken});
 
     next();
   } catch (error) {
