@@ -13,20 +13,42 @@ const verifyJWT = (token) => {
 };
 
 const cookies = ({ res, user }) => {
-  const token = createJWT({ payload: user });  
-  const oneDay = 1000 * 60 * 60 * 24
+  const token = createJWT({ payload: user });
+  const oneDay = 1000 * 60 * 60 * 24;
 
   res.cookie("authToken", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === "production",
     signed: true,
-    expires: new Date(Date.now() + oneDay),
+    expires: new Date(Date.now() + 1000 * 10),
+  });
+};
+
+const attachCookiesToResponse = ({ res, user, refreshToken }) => {
+  const authTokenJWT = createJWT({ payload: { user } });
+  const refreshTokenJWT = createJWT({ payload: { user, refreshToken } });
+
+  const oneDay = 1000 * 60 * 60 * 24;
+  const longerExp = oneDay * 30;
+
+  res.cookie("authToken", authTokenJWT, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    signed: true,
+    expires: new Date(Date.now() + 1000 * 10),
   });
 
+  res.cookie("refreshToken", refreshTokenJWT, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    signed: true,
+    expires: new Date(Date.now() + longerExp),
+  });
 };
 
 module.exports = {
   createJWT,
   verifyJWT,
-  cookies
+  cookies,
+  attachCookiesToResponse,
 };
